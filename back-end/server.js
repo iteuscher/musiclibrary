@@ -43,7 +43,7 @@ app.post('/api/images', upload.single('image'), async (req, res) => {
 		return res.sendStatus(400);
 	}
 	res.send({
-		path: '/images/' + req.file.filename,
+		path: req.file.filename,
 	});
 });
 
@@ -68,11 +68,7 @@ app.post('/api/records', async (req, res) => {
 // READ: get a list of all of the records
 app.get('/api/records', async (req, res) => {
 	try {
-		console.log('do you make it here?? ');
 		let records = await Record.find();
-
-		console.log('records are: ' + records);
-
 		res.send(records);
 	} catch (error) {
 		console.log(error);

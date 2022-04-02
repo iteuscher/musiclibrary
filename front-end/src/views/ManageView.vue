@@ -26,7 +26,7 @@
 		<div class="row .manage-page-row">
 			<div class="col-md">
 				<h2>Edit a Record</h2>
-				<input v-model="searchText" placeholder="Search" />
+				<input v-model="findTitle" placeholder="Search" />
 
 				<!-- <div class="suggestedRecord" v-for="record in filteredRecords" :key="record.id">
 					<p>{{ record.title }}</p>
@@ -95,7 +95,6 @@ export default {
 				return true;
 			} catch (error) {
 				console.error(error);
-				console.error(error.response.data);
 			}
 		},
 
