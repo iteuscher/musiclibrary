@@ -6,48 +6,73 @@
 			</div>
 		</div>
 		<div class="row .manage-page-row">
-			<div class="col-md">
+			<div class="col-md upload">
 				<h2>Upload a Record</h2>
-				<input v-model="title" placeholder="Title" />
-				<input v-model="artist" placeholder="Artist" />
-				<input v-model="year" placeholder="Year" />
-				<input v-model="genre" placeholder="Genre" />
-				<input type="file" name="photo" @change="fileChanged" />
-				<button @click="upload">Upload</button>
+				<div><input v-model="title" placeholder="Title" /></div>
+				<div><input v-model="artist" placeholder="Artist" /></div>
+				<div><input v-model="year" placeholder="Year" /></div>
+				<div><input v-model="genre" placeholder="Genre" /></div>
+				<div id="fileUpload"><input type="file" name="photo" @change="fileChanged" /></div>
+				<button id="uploadButton" type="button" class="btn" @click="upload"> Upload {{title}} </button>
 			</div>
 			<div class="col-md">
-				<!-- <div class="upload" v-if="addItem">
-					<h2>{{ addItem.title }}</h2>
-					<img :src="addItem.path" />
-				</div> -->
+				<div class="upload" v-if="addRecord">
+					<h2>{{ addRecord.title }}</h2>
+					<p>{{ addRecord.artist }}</p>
+					<img :src="addRecord.image" />
+				</div>
 			</div>
 		</div>
 
-		<div class="row .manage-page-row">
+
+		<div class="row .manage-page-row" id="editRecordRow">
 			<div class="col-md">
-				<h2>Edit a Record</h2>
+				<h2>Edit/Delete a Record</h2>
 				<input v-model="findTitle" placeholder="Search" />
 
-				<!-- <div class="suggestedRecord" v-for="record in filteredRecords" :key="record.id">
-					<p>{{ record.title }}</p>
-					<p>{{ record.artist }}</p>
-				</div> -->
-
-				<div class="suggestions" v-if="suggestions.length > 0">
+				<div class="suggestions" v-if="suggestions.length > 0 && suggestions.length != records.length">
 					<div
 						class="suggestion"
 						v-for="s in suggestions"
 						:key="s.id"
-						@click="selectItem(s)"
+						@click="selectRecord(s)"
 					>
-						{{ s.title }} {{ s.artist }}
+					<span v-if="s == findRecord" class="emphasize"> {{ s.title }} by {{ s.artist }} </span>
+					<span v-else> {{ s.title }} by {{ s.artist }} </span>
 					</div>
 				</div>
 
-				<!--  <div class="actions" v-if="findItem">
-					<button @click="deleteItem(findItem)">Delete</button>
-					<button @click="editItem(findItem)">Edit</button>
-				</div> -->
+				<div v-if=" findRecord " class="upload" id="editForm">
+					<div><input v-model="findRecord.title" placeholder='' /></div>
+					<div><input v-model="findRecord.artist" placeholder="Artist" /></div>
+					<div><input v-model="findRecord.year" placeholder="Year" /></div>
+					<div><input v-model="findRecord.genre" placeholder="Genre" /></div>
+
+					<div class="actions" >
+							<button @click="editRecord(findRecord)" type="button" class="btn btn-warning" > Save Edits</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md editWindow">
+				<div v-if="findRecord">
+					<div class="card">
+					<img class="card-img-top" :src="'/images/' + findRecord.image" />
+					<div class="card-body">
+						<h5 class="card-title">{{ findRecord.title }}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.artist }}</h6>
+						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.year }}</h6>
+						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.genre }}</h6>
+						<!-- <h2>{{ findRecord.title }}</h2>
+						<p>{{ findRecord.artist }}</p>
+						<img class="img-thumbnail " :src="'/images/' + findRecord.image" /> -->
+						<div class="actions" >
+							<!-- <button @click="editRecord(findRecord)" type="button" class="btn btn-warning" > Save Edits</button> -->
+							<button @click="deleteRecord(findRecord)" type="button" class="btn btn-danger" > Delete </button>
+						</div>
+					</div>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -60,6 +85,49 @@ h1 {
 
 .manage-page-row {
 	margin: 1em 0;
+}
+
+.editWindow .card {
+	max-width: 40%;
+}
+
+.actions button 
+{
+	font-size: 20px;
+	margin: 0.5em;
+	padding: 0.5em;
+}
+
+.upload div {
+	padding: 0.4em;
+	display: center;
+	/* margin-left: 35%; */
+}
+
+.actions {
+	padding-top: 1em;
+}
+
+#fileUpload {
+	padding-left: 2em;
+}
+
+#uploadButton {
+	font-size: 18px;
+	background-color: rgb(101, 191, 101);
+}
+
+#editRecordRow {
+	padding-top: 3em;
+	padding-bottom: 8em;
+}
+
+.emphasize {
+	background-color: rgb(101, 191, 101);
+}
+
+#editForm {
+	padding: 1em;
 }
 </style>
 
@@ -100,7 +168,7 @@ export default {
 
 		selectRecord(record) {
 			this.findRecord = record;
-			this.findTitle = '';
+			// this.findTitle = '';
 		},
 
 		async editRecord(record) {
