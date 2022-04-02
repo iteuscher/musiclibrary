@@ -27,6 +27,7 @@ const recordSchema = new mongoose.Schema({
 	year: String,
 	genre: String,
 	image: String,
+	inLibrary: Boolean,
 });
 
 // Model for records
@@ -47,7 +48,7 @@ app.post('/api/images', upload.single('image'), async (req, res) => {
 	});
 });
 
-// CREATE: add a new record to the music library
+// CREATE: add a new record to the music catalog
 app.post('/api/records', async (req, res) => {
 	const newRecord = new Record({
 		title: req.body.title,
@@ -55,6 +56,7 @@ app.post('/api/records', async (req, res) => {
 		year: req.body.year,
 		genre: req.body.genre,
 		image: req.body.image,
+		inLibrary: false,
 	});
 	try {
 		await newRecord.save();
@@ -76,14 +78,27 @@ app.get('/api/records', async (req, res) => {
 	}
 });
 
+// READ: get a list of records in the library
+app.get('/api/records/library', async (req, res) => {
+	try {
+		let records = await Record.find({ inLibrary: true });
+		res.send(records);
+	} catch (error) {
+		console.log(error);
+		res.sendStatus(500);
+	}
+});
+
 // UPDATE: edit a record
 app.put('/api/records/:id', async (req, res) => {
 	try {
 		let recordToEdit = await Record.findOne({ _id: req.params.id });
 		recordToEdit.title = req.body.title;
-		recordToEdit.description = req.body.artist;
-		recordToEdit.description = req.body.year;
-		recordToEdit.description = req.body.genre;
+		recordToEdit.artist = req.body.artist;
+		recordToEdit.year = req.body.year;
+		recordToEdit.genre = req.body.genre;
+		recordToEdit.image = req.body.image;
+		recordToEdit.inLibrary = req.body.inLibrary;
 		recordToEdit.save();
 		res.sendStatus(200);
 	} catch (error) {
