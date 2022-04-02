@@ -1,10 +1,10 @@
 <template>
 	<div class="manage container-fluid">
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col">
 				<h1>Manage</h1>
 			</div>
-		</div>
+		</div> -->
 		<div class="row .manage-page-row">
 			<div class="col-md upload">
 				<h2>Upload a Record</h2>
@@ -16,10 +16,16 @@
 				<button id="uploadButton" type="button" class="btn" @click="upload"> Upload {{title}} </button>
 			</div>
 			<div class="col-md">
-				<div class="upload" v-if="addRecord">
-					<h2>{{ addRecord.title }}</h2>
-					<p>{{ addRecord.artist }}</p>
-					<img :src="addRecord.image" />
+				<div class="upload manageWindow" v-if="addRecord">
+					<div class="card">
+						<img class="card-img-top" :src="'/images/' + addRecord.image" />
+						<div class="card-body">
+							<h5 class="card-title">{{ addRecord.title }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.artist }}</h6>
+							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.year }}</h6>
+							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.genre }}</h6>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -54,7 +60,7 @@
 				</div>
 
 			</div>
-			<div class="col-md editWindow">
+			<div class="col-md manageWindow">
 				<div v-if="findRecord">
 					<div class="card">
 					<img class="card-img-top" :src="'/images/' + findRecord.image" />
@@ -83,11 +89,15 @@ h1 {
 	margin: 0.5em;
 }
 
+.row {
+	margin-top: 2em;
+}
+
 .manage-page-row {
 	margin: 1em 0;
 }
 
-.editWindow .card {
+.manageWindow .card {
 	max-width: 40%;
 }
 
@@ -173,14 +183,16 @@ export default {
 
 		async editRecord(record) {
 			try {
-				await axios.put('/api/records' + record._id, {
+				await axios.put('/api/records/' + record._id, {
 					title: this.findRecord.title,
 					artist: this.findRecord.artist,
 					year: this.findRecord.year,
 					genre: this.findRecord.genre,
+					image: this.findRecord.image,
+					inLibrary: this.findRecord.inLibrary,
 				});
 
-				this.findRecord = null;
+				// this.findRecord = null;
 				this.getRecords();
 				return true;
 			} catch (error) {
@@ -190,6 +202,21 @@ export default {
 
 		fileChanged(event) {
 			this.file = event.target.files[0];
+		},
+		
+		async deleteRecord(record) {
+			try {
+				await axios.delete('/api/records/' + record._id);
+
+				const index = this.records.indexOf(record);
+				this.records.splice(index, 1);
+				this.findRecord = null;
+				this.findTitle = '';
+				this.getRecords();
+				return true;
+			} catch (error) {
+				console.error(error);
+			}
 		},
 
 		async upload() {
