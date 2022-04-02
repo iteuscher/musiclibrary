@@ -10,7 +10,7 @@
 					<router-link to="/library" class="nav-link">Library</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link to="/about" class="nav-link">About</router-link>
+					<router-link to="/manage" class="nav-link">Manage</router-link>
 				</li>
 			</ul>
 		</nav>
@@ -18,10 +18,10 @@
 		<div class="footer container-fluid bg-light">
 			<div class="row">
 				<div class="col-sm">
-					<a href="https://github.com/jaredcanizales/creative-project-3"
+					<a href="https://github.com/iteuscher/musiclibrary"
 						><i class="fab fa-github"></i
 					></a>
-					<p>&copy; 2022 Jared Canizales</p>
+					<p>&copy; 2022 Isaac Teuscher &amp; Jared Canizales</p>
 				</div>
 			</div>
 		</div>

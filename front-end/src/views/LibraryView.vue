@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<LibraryList :albums="this.$root.$data.library" />
+			<LibraryList :records="this.$root.$data.library" />
 		</div>
 	</div>
 </template>

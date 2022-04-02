@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import BrowseView from '../views/BrowseView.vue';
 import LibraryView from '../views/LibraryView.vue';
-import AboutView from '../views/AboutView.vue';
+import ManageView from '../views/ManageView.vue';
 
 Vue.use(VueRouter);
 
@@ -18,9 +18,9 @@ const routes = [
 		component: LibraryView,
 	},
 	{
-		path: '/about',
-		name: 'about',
-		component: AboutView,
+		path: '/manage',
+		name: 'manage',
+		component: ManageView,
 	},
 ];
 

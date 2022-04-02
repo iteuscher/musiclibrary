@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="row">
-			<AlbumList :albums="albums" />
+			<RecordList :records="filteredRecords" />
 		</div>
 	</div>
 </template>
@@ -26,27 +26,43 @@ input {
 </style>
 
 <script>
-import AlbumList from '../components/AlbumList.vue';
+import RecordList from '../components/RecordList.vue';
+import axios from 'axios';
 
 export default {
 	name: 'BrowseView',
 	components: {
-		AlbumList,
+		RecordList,
 	},
 	data() {
 		return {
+			records: [],
 			searchText: '',
 		};
 	},
+	created() {
+		this.getRecords();
+	},
+	methods: {
+		async getRecords() {
+			try {
+				let response = await axios.get('/api/records');
+				this.records = response.data;
+				return true;
+			} catch (error) {
+				console.error(error);
+			}
+		},
+	},
 	computed: {
-		albums() {
-			return this.$root.$data.albums.filter((album) => {
+		filteredRecords() {
+			return this.records.filter((record) => {
 				const lowercaseSearchText = this.searchText.toLowerCase();
 				return (
-					album.title.toLowerCase().search(lowercaseSearchText) >= 0 ||
-					album.artist.toLowerCase().search(lowercaseSearchText) >= 0 ||
-					album.year.toLowerCase().search(lowercaseSearchText) >= 0 ||
-					album.genre.toLowerCase().search(lowercaseSearchText) >= 0
+					record.title.toLowerCase().search(lowercaseSearchText) >= 0 ||
+					record.artist.toLowerCase().search(lowercaseSearchText) >= 0 ||
+					record.year.toLowerCase().search(lowercaseSearchText) >= 0 ||
+					record.genre.toLowerCase().search(lowercaseSearchText) >= 0
 				);
 			});
 		},

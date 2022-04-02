@@ -7,8 +7,12 @@
 				<h6 class="card-subtitle mb-2 text-muted">{{ record.artist }}</h6>
 				<h6 class="card-subtitle mb-2 text-muted">{{ record.year }}</h6>
 				<h6 class="card-subtitle mb-2 text-muted">{{ record.genre }}</h6>
-				<button @click="removeFromLibrary(record)" class="btn btn-danger">
-					Remove from Library
+				<button
+					@click="addtoLibrary(record)"
+					type="button"
+					class="btn btn-success"
+				>
+					Add to Library
 				</button>
 			</div>
 		</div>
@@ -17,14 +21,13 @@
 
 <script>
 export default {
-	name: 'LibraryList',
+	name: 'RecordList',
 	props: {
 		records: Array,
 	},
 	methods: {
-		removeFromLibrary(record) {
-			const index = this.$root.$data.library.indexOf(record);
-			this.$root.$data.library.splice(index, 1);
+		addtoLibrary(record) {
+			this.$root.$data.library.push(record);
 		},
 	},
 };

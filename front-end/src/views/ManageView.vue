@@ -32,6 +32,6 @@ h1 {
 
 <script>
 export default {
-	name: 'AboutView',
+	name: 'ManageView',
 };
 </script>
