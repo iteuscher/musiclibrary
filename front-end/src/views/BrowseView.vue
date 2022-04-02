@@ -19,7 +19,7 @@
 						<h6 class="card-subtitle mb-2 text-muted">{{ record.year }}</h6>
 						<h6 class="card-subtitle mb-2 text-muted">{{ record.genre }}</h6>
 						<button
-							@click="addtoLibrary(record)"
+							@click="addToLibrary(record)"
 							type="button"
 							:disabled="record.inLibrary"
 							class="btn btn-success"
@@ -95,7 +95,7 @@ export default {
 			}
 		},
 
-		async addtoLibrary(record) {
+		async addToLibrary(record) {
 			try {
 				await axios.put('/api/records/' + record._id, {
 					title: record.title,
