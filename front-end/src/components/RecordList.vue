@@ -10,6 +10,7 @@
 				<button
 					@click="addtoLibrary(record)"
 					type="button"
+					:disabled="record.inLibrary"
 					class="btn btn-success"
 				>
 					Add to Library
