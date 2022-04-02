@@ -14,12 +14,21 @@
 				>
 					Add to Library
 				</button>
+				<button
+					@click="this.$parent.deleteRecord(record)"
+					type="button"
+					class="btn btn-danger"
+				>
+					Delete
+				</button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+//import axios from 'axios';
+
 export default {
 	name: 'RecordList',
 	props: {

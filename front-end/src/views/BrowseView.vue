@@ -53,6 +53,16 @@ export default {
 				console.error(error);
 			}
 		},
+
+		async deleteRecord(record) {
+			try {
+				await axios.delete('/api/records' + record._id);
+				this.getRecords();
+				return true;
+			} catch (error) {
+				console.error(error);
+			}
+		},
 	},
 	computed: {
 		filteredRecords() {
