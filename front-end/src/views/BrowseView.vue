@@ -118,7 +118,10 @@ export default {
 		async deleteRecord(record) {
 			try {
 				await axios.delete('/api/records/' + record._id);
-				await this.getRecords();
+
+				const index = this.records.indexOf(record);
+				this.records.splice(index, 1);
+
 				return true;
 			} catch (error) {
 				console.error(error);
