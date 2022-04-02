@@ -56,7 +56,7 @@ export default {
 
 		async deleteRecord(record) {
 			try {
-				await axios.delete('/api/records' + record._id);
+				await axios.delete('/api/records/' + record._id);
 				this.getRecords();
 				return true;
 			} catch (error) {

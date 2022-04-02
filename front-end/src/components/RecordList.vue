@@ -15,7 +15,7 @@
 					Add to Library
 				</button>
 				<button
-					@click="this.$parent.deleteRecord(record)"
+					@click="deleteRecord(record)"
 					type="button"
 					class="btn btn-danger"
 				>
@@ -27,8 +27,6 @@
 </template>
 
 <script>
-//import axios from 'axios';
-
 export default {
 	name: 'RecordList',
 	props: {
@@ -38,6 +36,10 @@ export default {
 		addtoLibrary(record) {
 			this.$root.$data.library.push(record);
 		},
+
+		async deleteRecord(record) {
+			await this.$parent.deleteRecord(record);
+		},
 	},
 };
 </script>
@@ -45,6 +47,10 @@ export default {
 <style scoped>
 img {
 	width: 100%;
+}
+
+.btn-danger {
+	margin-top: 0.5em;
 }
 
 .container {
