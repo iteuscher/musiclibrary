@@ -28,34 +28,36 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 
-export default {
-	name: 'RecordList',
-	props: {
-		records: Array,
-	},
-	methods: {
-		async addtoLibrary(record) {
-			try {
-				await axios.put('/api/records/' + record._id, {
-					title: record.title,
-					artist: record.artist,
-					year: record.year,
-					genre: record.genre,
-					image: record.image,
-					inLibrary: true,
-				});
-			} catch (error) {
-				console.error(error);
-			}
-		},
+// export default {
+// 	name: 'RecordList',
+// 	props: {
+// 		records: Array,
+// 	},
+// 	methods: {
+// 		async addtoLibrary(record) {
+// 			try {
+// 				await axios.put('/api/records/' + record._id, {
+// 					title: record.title,
+// 					artist: record.artist,
+// 					year: record.year,
+// 					genre: record.genre,
+// 					image: record.image,
+// 					inLibrary: true,
+// 				});
+// 				await this.$parent.getRecords();
+// 				return true;
+// 			} catch (error) {
+// 				console.error(error);
+// 			}
+// 		},
 
-		async deleteRecord(record) {
-			await this.$parent.deleteRecord(record);
-		},
-	},
-};
+// 		async deleteRecord(record) {
+// 			await this.$parent.deleteRecord(record);
+// 		},
+// 	},
+// };
 </script>
 
 <style scoped>

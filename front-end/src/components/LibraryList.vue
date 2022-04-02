@@ -34,7 +34,7 @@ export default {
 					image: record.image,
 					inLibrary: false,
 				});
-				await this.$parent.getRecords();
+				this.$parent.getRecords();
 				return true;
 			} catch (error) {
 				console.error(error);
