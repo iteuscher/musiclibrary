@@ -34,15 +34,18 @@ export default {
 	components: {
 		RecordList,
 	},
+
 	data() {
 		return {
 			records: [],
 			searchText: '',
 		};
 	},
+
 	created() {
 		this.getRecords();
 	},
+
 	methods: {
 		async getRecords() {
 			try {

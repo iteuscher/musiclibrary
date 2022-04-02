@@ -16,15 +16,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
 	name: 'LibraryList',
 	props: {
 		records: Array,
 	},
 	methods: {
-		removeFromLibrary(record) {
-			const index = this.$root.$data.library.indexOf(record);
-			this.$root.$data.library.splice(index, 1);
+		async removeFromLibrary(record) {
+			try {
+				await axios.put('/api/records/' + record._id, {
+					title: record.title,
+					artist: record.artist,
+					year: record.year,
+					genre: record.genre,
+					image: record.image,
+					inLibrary: false,
+				});
+				await this.$parent.getRecords();
+				return true;
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
 };

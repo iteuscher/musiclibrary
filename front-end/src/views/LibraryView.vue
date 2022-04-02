@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<LibraryList :records="this.$root.$data.library" />
+			<LibraryList :records="records" />
 		</div>
 	</div>
 </template>
@@ -27,11 +27,34 @@ input {
 
 <script>
 import LibraryList from '@/components/LibraryList.vue';
+import axios from 'axios';
 
 export default {
 	name: 'LibraryView',
 	components: {
 		LibraryList,
+	},
+
+	data() {
+		return {
+			records: [],
+		};
+	},
+
+	created() {
+		this.getRecords();
+	},
+
+	methods: {
+		async getRecords() {
+			try {
+				let response = await axios.get('/api/records/library');
+				this.records = response.data;
+				return true;
+			} catch (error) {
+				console.error(error);
+			}
+		},
 	},
 };
 </script>

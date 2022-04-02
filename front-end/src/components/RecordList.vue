@@ -27,14 +27,27 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
 	name: 'RecordList',
 	props: {
 		records: Array,
 	},
 	methods: {
-		addtoLibrary(record) {
-			this.$root.$data.library.push(record);
+		async addtoLibrary(record) {
+			try {
+				await axios.put('/api/records/' + record._id, {
+					title: record.title,
+					artist: record.artist,
+					year: record.year,
+					genre: record.genre,
+					image: record.image,
+					inLibrary: true,
+				});
+			} catch (error) {
+				console.error(error);
+			}
 		},
 
 		async deleteRecord(record) {
