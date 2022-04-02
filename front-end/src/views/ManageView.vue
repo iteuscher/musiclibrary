@@ -12,8 +12,17 @@
 				<div><input v-model="artist" placeholder="Artist" /></div>
 				<div><input v-model="year" placeholder="Year" /></div>
 				<div><input v-model="genre" placeholder="Genre" /></div>
-				<div id="fileUpload"><input type="file" name="photo" @change="fileChanged" /></div>
-				<button id="uploadButton" type="button" class="btn" @click="upload"> Upload {{title}} </button>
+				<div id="fileUpload">
+					<input type="file" name="photo" @change="fileChanged" />
+				</div>
+				<button
+					id="uploadButton"
+					type="button"
+					class="btn btn-success"
+					@click="upload"
+				>
+					Upload {{ title }}
+				</button>
 			</div>
 			<div class="col-md">
 				<div class="upload manageWindow" v-if="addRecord">
@@ -21,63 +30,90 @@
 						<img class="card-img-top" :src="'/images/' + addRecord.image" />
 						<div class="card-body">
 							<h5 class="card-title">{{ addRecord.title }}</h5>
-							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.artist }}</h6>
-							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.year }}</h6>
-							<h6 class="card-subtitle mb-2 text-muted">{{ addRecord.genre }}</h6>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ addRecord.artist }}
+							</h6>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ addRecord.year }}
+							</h6>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ addRecord.genre }}
+							</h6>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-
 		<div class="row .manage-page-row" id="editRecordRow">
 			<div class="col-md">
 				<h2>Edit/Delete a Record</h2>
 				<input v-model="findTitle" placeholder="Search" />
 
-				<div class="suggestions" v-if="suggestions.length > 0 && suggestions.length != records.length">
+				<div
+					class="suggestions"
+					v-if="suggestions.length > 0 && findTitle.length > 0"
+				>
 					<div
 						class="suggestion"
 						v-for="s in suggestions"
 						:key="s.id"
 						@click="selectRecord(s)"
 					>
-					<span v-if="s == findRecord" class="emphasize"> {{ s.title }} by {{ s.artist }} </span>
-					<span v-else> {{ s.title }} by {{ s.artist }} </span>
+						<span v-if="s == findRecord" class="emphasize">
+							{{ s.title }} by {{ s.artist }}
+						</span>
+						<span v-else> {{ s.title }} by {{ s.artist }} </span>
 					</div>
 				</div>
 
-				<div v-if=" findRecord " class="upload" id="editForm">
-					<div><input v-model="findRecord.title" placeholder='' /></div>
+				<div v-if="findRecord" class="upload" id="editForm">
+					<div><input v-model="findRecord.title" placeholder="" /></div>
 					<div><input v-model="findRecord.artist" placeholder="Artist" /></div>
 					<div><input v-model="findRecord.year" placeholder="Year" /></div>
 					<div><input v-model="findRecord.genre" placeholder="Genre" /></div>
 
-					<div class="actions" >
-							<button @click="editRecord(findRecord)" type="button" class="btn btn-warning" > Save Edits</button>
+					<div class="actions">
+						<button
+							@click="editRecord(findRecord)"
+							type="button"
+							class="btn btn-warning"
+						>
+							Save Edits
+						</button>
 					</div>
 				</div>
-
 			</div>
 			<div class="col-md manageWindow">
 				<div v-if="findRecord">
 					<div class="card">
-					<img class="card-img-top" :src="'/images/' + findRecord.image" />
-					<div class="card-body">
-						<h5 class="card-title">{{ findRecord.title }}</h5>
-						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.artist }}</h6>
-						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.year }}</h6>
-						<h6 class="card-subtitle mb-2 text-muted">{{ findRecord.genre }}</h6>
-						<!-- <h2>{{ findRecord.title }}</h2>
+						<img class="card-img-top" :src="'/images/' + findRecord.image" />
+						<div class="card-body">
+							<h5 class="card-title">{{ findRecord.title }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ findRecord.artist }}
+							</h6>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ findRecord.year }}
+							</h6>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{{ findRecord.genre }}
+							</h6>
+							<!-- <h2>{{ findRecord.title }}</h2>
 						<p>{{ findRecord.artist }}</p>
 						<img class="img-thumbnail " :src="'/images/' + findRecord.image" /> -->
-						<div class="actions" >
-							<!-- <button @click="editRecord(findRecord)" type="button" class="btn btn-warning" > Save Edits</button> -->
-							<button @click="deleteRecord(findRecord)" type="button" class="btn btn-danger" > Delete </button>
+							<div class="actions">
+								<!-- <button @click="editRecord(findRecord)" type="button" class="btn btn-warning" > Save Edits</button> -->
+								<button
+									@click="deleteRecord(findRecord)"
+									type="button"
+									class="btn btn-danger"
+								>
+									Delete
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
 				</div>
 			</div>
 		</div>
@@ -101,12 +137,11 @@ h1 {
 	max-width: 40%;
 }
 
-.actions button 
-{
+/* .actions button {
 	font-size: 20px;
 	margin: 0.5em;
 	padding: 0.5em;
-}
+} */
 
 .upload div {
 	padding: 0.4em;
@@ -122,10 +157,10 @@ h1 {
 	padding-left: 2em;
 }
 
-#uploadButton {
+/* #uploadButton {
 	font-size: 18px;
 	background-color: rgb(101, 191, 101);
-}
+} */
 
 #editRecordRow {
 	padding-top: 3em;
@@ -172,7 +207,7 @@ export default {
 				this.records = response.data;
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 
@@ -196,14 +231,14 @@ export default {
 				this.getRecords();
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 
 		fileChanged(event) {
 			this.file = event.target.files[0];
 		},
-		
+
 		async deleteRecord(record) {
 			try {
 				await axios.delete('/api/records/' + record._id);
@@ -215,7 +250,7 @@ export default {
 				this.getRecords();
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 
@@ -225,7 +260,7 @@ export default {
 				formData.append('image', this.file, this.file.name);
 
 				let imageUploadResponse = await axios.post('/api/images', formData);
-				console.log('image upload response path is : ' + imageUploadResponse);
+
 				let addRecordResponse = await axios.post('/api/records', {
 					title: this.title,
 					artist: this.artist,
@@ -236,7 +271,7 @@ export default {
 
 				this.addRecord = addRecordResponse.data;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 	},

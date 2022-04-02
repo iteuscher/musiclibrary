@@ -11,7 +11,7 @@
 
 		<div class="row">
 			<div class="container d-flex flex-wrap">
-				<div class="card" v-for="record in records" :key="record.id">
+				<div class="card" v-for="record in filteredRecords" :key="record.id">
 					<img class="card-img-top" :src="'/images/' + record.image" />
 					<div class="card-body">
 						<h5 class="card-title">{{ record.title }}</h5>
@@ -91,7 +91,7 @@ export default {
 				this.records = response.data;
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 
@@ -111,7 +111,7 @@ export default {
 
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 
@@ -124,7 +124,7 @@ export default {
 
 				return true;
 			} catch (error) {
-				console.error(error);
+				// console.error(error);
 			}
 		},
 	},
