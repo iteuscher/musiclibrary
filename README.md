@@ -6,4 +6,4 @@ Pair Programmed by Jared Canizales (@jaredcanizales) and Isaac Teuscher (@iteusc
 
 Built with Vue CLI, Node JS, Express, and Mongo DB.
 
-Visit the live site at: 
+Visit the live site at: [http://music.jaredcanizales.com/](http://music.jaredcanizales.com/)
